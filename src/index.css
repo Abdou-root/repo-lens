@@ -1,0 +1,517 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* === WARM LIGHT THEME === */
+    /* Warmer backgrounds for reduced eye strain */
+    --background: 30 20% 65%;
+    --foreground: 25 12% 18%;
+
+    --card: 36 30% 80%;
+    --card-foreground: 25 12% 15%;
+
+    --popover: 38 40% 80%;
+    --popover-foreground: 25 12% 15%;
+
+    /* Primary: Burnt orange for CTAs */
+    --primary: 24 60% 47%;
+    --primary-foreground: 40 50% 98%;
+
+    --secondary: 35 25% 75%;
+    --secondary-foreground: 25 12% 15%;
+
+    --muted: 34 22% 72%;
+    --muted-foreground: 28 10% 35%;
+
+    /* Accent: Peach highlight */
+    --accent: 28 48% 72%;
+    --accent-foreground: 25 12% 15%;
+
+    /* Semantic colors */
+    --destructive: 4 70% 55%;
+    --destructive-foreground: 40 50% 98%;
+
+    --success: 152 55% 40%;
+    --warning: 38 90% 55%;
+
+    /* UI chrome */
+    --border: 32 18% 68%;
+    --input: 32 18% 68%;
+    --ring: 24 60% 47%;
+
+    /* Link color: Keep blue for links and graph elements */
+    --link: 221 83% 53%;
+    --link-hover: 221 83% 45%;
+
+    /* Border radius - friendlier rounded corners */
+    --radius: 0.625rem;
+    --radius-lg: 0.9375rem;
+    --radius-xl: 1.25rem;
+    --radius-2xl: 1.875rem;
+
+    /* Sidebar */
+    --sidebar-background: 35 35% 78%;
+    --sidebar-foreground: 25 12% 15%;
+    --sidebar-primary: 24 60% 47%;
+    --sidebar-primary-foreground: 40 50% 98%;
+    --sidebar-accent: 35 25% 75%;
+    --sidebar-accent-foreground: 25 12% 15%;
+    --sidebar-border: 32 20% 72%;
+    --sidebar-ring: 24 50% 60%;
+
+    /* Chart colors - preserved for graph visualization */
+    --chart-1: 30 40% 42%;
+    --chart-2: 210 40% 42%;
+    --chart-3: 145 38% 40%;
+    --chart-4: 270 35% 48%;
+    --chart-5: 215 25% 44%;
+
+    --sidebar: 35 35% 80%;
+
+    /* Typography */
+    --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    /* Enhanced shadows - warmer, more visible for visual lift */
+    --shadow-2xs: 0 1px 2px hsl(25 30% 15% / 0.03);
+    --shadow-xs: 0 1px 2px hsl(25 30% 15% / 0.04);
+    --shadow-sm: 0 2px 4px hsl(25 30% 15% / 0.05), 0 1px 2px hsl(25 30% 15% / 0.04);
+    --shadow: 0 4px 8px hsl(25 30% 15% / 0.06), 0 2px 4px hsl(25 30% 15% / 0.04);
+    --shadow-md: 0 6px 16px hsl(25 30% 15% / 0.07), 0 3px 6px hsl(25 30% 15% / 0.05);
+    --shadow-lg: 0 12px 24px hsl(25 30% 15% / 0.08), 0 4px 8px hsl(25 30% 15% / 0.05);
+    --shadow-xl: 0 24px 48px hsl(25 30% 15% / 0.10), 0 8px 16px hsl(25 30% 15% / 0.06);
+    --shadow-2xl: 0 32px 64px hsl(25 30% 15% / 0.12);
+
+    /* Glow effects for primary elements */
+    --shadow-glow: 0 0 20px hsl(24 60% 47% / 0.15);
+    --shadow-glow-sm: 0 0 10px hsl(24 60% 47% / 0.09);
+
+    /* Gradient tokens for warm backgrounds */
+    --gradient-warm: linear-gradient(135deg, hsl(32 30% 96%) 0%, hsl(28 35% 94%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(32 30% 96%) 0%, hsl(35 40% 92%) 50%, hsl(28 35% 94%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(38 40% 98%) 0%, hsl(38 40% 97%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(24 60% 47%) 0%, hsl(28 55% 52%) 100%);
+
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+  }
+
+  .dark {
+    --background: 0 0% 18%;
+    --foreground: 248 0.3% 98.4%;
+
+    --card: 266 4% 24%;
+    --card-foreground: 248 0.3% 98.4%;
+
+    --popover: 266 4% 24%;
+    --popover-foreground: 248 0.3% 98.4%;
+
+    --primary: 256 1.3% 92.9%;
+    --primary-foreground: 266 4% 24%;
+
+    --secondary: 260 4.1% 27.9%;
+    --secondary-foreground: 248 0.3% 98.4%;
+
+    --muted: 260 4.1% 30%;
+    --muted-foreground: 257 4% 70.4%;
+
+    --accent: 260 4.1% 30%;
+    --accent-foreground: 248 0.3% 98.4%;
+
+    --destructive: 22 19.1% 70.4%;
+    --destructive-foreground: 248 0.3% 98.4%;
+
+    --border: 0 0% 100% / 10%;
+    --input: 0 0% 100% / 15%;
+    --ring: 264 2.7% 55.1%;
+    --sidebar-background: 240 5.9% 14%;
+    --sidebar-foreground: 248 0.3% 98.4%;
+    --sidebar-primary: 264 24.3% 48.8%;
+    --sidebar-primary-foreground: 248 0.3% 98.4%;
+    --sidebar-accent: 260 4.1% 30%;
+    --sidebar-accent-foreground: 248 0.3% 98.4%;
+    --sidebar-border: 0 0% 100% / 10%;
+    --sidebar-ring: 264 2.7% 55.1%;
+    --chart-1: 264 24.3% 48.8%;
+    --chart-2: 162 17% 69.6%;
+    --chart-3: 70 18.8% 76.9%;
+    --chart-4: 304 26.5% 62.7%;
+    --chart-5: 16 24.6% 64.5%;
+    --sidebar: 266 4% 24%;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.035);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.035);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.07), 0 1px 2px -1px hsl(0 0% 0% / 0.07);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.07), 0 1px 2px -1px hsl(0 0% 0% / 0.07);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.07), 0 2px 4px -1px hsl(0 0% 0% / 0.07);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.07), 0 4px 6px -1px hsl(0 0% 0% / 0.07);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.07), 0 8px 10px -1px hsl(0 0% 0% / 0.07);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.18);
+  }
+}
+
+/* xyflow Controls - Dark Mode Fix */
+.dark .react-flow__controls {
+  background: hsl(var(--card)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+}
+
+.dark .react-flow__controls-button {
+  background: hsl(var(--card)) !important;
+  border-bottom: 1px solid hsl(var(--border)) !important;
+  color: hsl(var(--card-foreground)) !important;
+  fill: hsl(var(--card-foreground)) !important;
+}
+
+.dark .react-flow__controls-button:hover {
+  background: hsl(var(--accent)) !important;
+  color: hsl(var(--accent-foreground)) !important;
+  fill: hsl(var(--accent-foreground)) !important;
+}
+
+.dark .react-flow__controls-button svg {
+  fill: hsl(var(--card-foreground)) !important;
+}
+
+/* xyflow MiniMap - Dark Mode Fix */
+.dark .react-flow__minimap {
+  background: hsl(var(--card)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+}
+
+.dark .react-flow__minimap-mask {
+  fill: hsl(var(--muted)) !important;
+  opacity: 0.6;
+}
+
+.dark .react-flow__minimap-node {
+  fill: hsl(var(--primary)) !important;
+  stroke: hsl(var(--border)) !important;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Link styling - uses preserved blue color */
+  a:not([class]) {
+    color: hsl(var(--link));
+    text-decoration: none;
+  }
+
+  a:not([class]):hover {
+    color: hsl(var(--link-hover));
+    text-decoration: underline;
+  }
+}
+
+/* Utility classes for link color */
+.text-link {
+  color: hsl(var(--link));
+}
+
+.text-link:hover {
+  color: hsl(var(--link-hover));
+}
+
+/* Animation utilities */
+@layer utilities {
+  /* Staggered animation delays */
+  .stagger-1 { animation-delay: 50ms; }
+  .stagger-2 { animation-delay: 100ms; }
+  .stagger-3 { animation-delay: 150ms; }
+  .stagger-4 { animation-delay: 200ms; }
+  .stagger-5 { animation-delay: 250ms; }
+  .stagger-6 { animation-delay: 300ms; }
+
+  /* Gradient text utility */
+  .text-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(24 70% 55%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glow utilities */
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-glow-sm {
+    box-shadow: var(--shadow-glow-sm);
+  }
+
+  /* Interactive card hover */
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Smooth focus ring animation */
+  .focus-ring-animate:focus-visible {
+    animation: focus-ring-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+/* Keyframe animations */
+@keyframes focus-ring-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4); }
+  50% { box-shadow: 0 0 0 4px hsl(var(--primary) / 0); }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-scale {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-right {
+  0% { opacity: 0; transform: translateX(10px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== ReactFlow Graph Enhancements ===== */
+
+/* Edge hover effects */
+.react-flow__edge-path {
+  transition: stroke-width 0.2s ease, opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.react-flow__edge-path:hover {
+  stroke-width: 4px !important;
+  opacity: 1 !important;
+}
+
+.react-flow__edge.animated .react-flow__edge-path {
+  animation: dash 20s linear infinite;
+  stroke-dasharray: 5;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Node animations */
+.react-flow__node {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.react-flow__node.selected {
+  z-index: 1000 !important;
+}
+
+/* Handle styles */
+.react-flow__handle {
+  transition: all 0.2s ease;
+}
+
+.react-flow__handle:hover {
+  transform: scale(1.5);
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.2);
+}
+
+/* Controls styling */
+.react-flow__controls {
+  box-shadow: var(--shadow-lg) !important;
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+}
+
+.react-flow__controls-button {
+  transition: all 0.2s ease !important;
+}
+
+.react-flow__controls-button:hover {
+  transform: scale(1.05);
+}
+
+/* MiniMap enhancements */
+.react-flow__minimap {
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+  overflow: hidden;
+}
+
+.react-flow__minimap-node {
+  transition: all 0.2s ease;
+}
+
+/* Background pattern */
+.react-flow__background {
+  opacity: 0.5;
+}
+
+.dark .react-flow__background {
+  opacity: 0.3;
+}
+
+/* Selection box */
+.react-flow__selection {
+  background: hsl(var(--primary) / 0.1);
+  border: 2px dashed hsl(var(--primary));
+}
+
+/* Edge labels */
+.react-flow__edge-text {
+  font-size: 10px;
+  font-weight: 600;
+  text-shadow: 0 1px 2px hsl(var(--background) / 0.8);
+}
+
+/* Smooth transitions for layout changes */
+.react-flow__node,
+.react-flow__edge {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Fade in animation for newly added nodes */
+@keyframes node-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.react-flow__node {
+  animation: node-fade-in 0.3s ease;
+}
+
+/* Loading skeleton */
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-skeleton {
+  animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Fade in up animation class */
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease;
+}
+
+/* Shimmer animation for loading states */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* Pulse glow animation for chat */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.5), 0 0 30px hsl(var(--primary) / 0.3);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Mobile touch optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger tap targets for mobile */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Prevent text selection on double tap */
+  .react-flow__pane {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Better touch feedback */
+  button:active, [role="button"]:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+    transition: all 0.1s ease;
+  }
+
+  /* Optimize graph controls for touch */
+  .react-flow__controls button {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* Hide tooltips on mobile (rely on tap instead) */
+  [data-tooltip], [title] {
+    pointer-events: auto;
+  }
+
+  /* Optimize minimap for touch */
+  .react-flow__minimap {
+    width: 150px !important;
+    height: 120px !important;
+  }
+
+  /* Make scrollable areas smooth */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Prevent zoom on double-tap for iOS */
+@supports (-webkit-touch-callout: none) {
+  input, select, textarea {
+    font-size: 16px;
+  }
+}

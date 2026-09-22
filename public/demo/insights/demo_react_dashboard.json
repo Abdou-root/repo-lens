@@ -1,0 +1,56 @@
+{
+  "repo_id": "demo_react_dashboard",
+  "summary": {
+    "total_nodes": 13,
+    "code_nodes": 10,
+    "total_edges": 11,
+    "avg_connections": 2.2
+  },
+  "insights": {
+    "entry_points": [],
+    "complexity_hotspots": [],
+    "architecture_hubs": [],
+    "isolated_modules": [
+      {
+        "id": "demo_react_dashboard:src/components/Dashboard.tsx:Dashboard",
+        "name": "Dashboard",
+        "type": "class",
+        "path": "src/components/Dashboard.tsx",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      },
+      {
+        "id": "demo_react_dashboard:src/components/Dashboard.tsx:LoadingSpinner",
+        "name": "LoadingSpinner",
+        "type": "class",
+        "path": "src/components/Dashboard.tsx",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      },
+      {
+        "id": "demo_react_dashboard:src/components/Dashboard.tsx:ErrorMessage",
+        "name": "ErrorMessage",
+        "type": "class",
+        "path": "src/components/Dashboard.tsx",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      },
+      {
+        "id": "demo_react_dashboard:src/components/Dashboard.tsx:StatsCard",
+        "name": "StatsCard",
+        "type": "class",
+        "path": "src/components/Dashboard.tsx",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      },
+      {
+        "id": "demo_react_dashboard:src/components/Dashboard.tsx:loadDashboardData",
+        "name": "loadDashboardData",
+        "type": "function",
+        "path": "src/components/Dashboard.tsx",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      }
+    ]
+  }
+}

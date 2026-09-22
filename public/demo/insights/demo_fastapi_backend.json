@@ -1,0 +1,126 @@
+{
+  "repo_id": "demo_fastapi_backend",
+  "summary": {
+    "total_nodes": 22,
+    "code_nodes": 19,
+    "total_edges": 29,
+    "avg_connections": 3.05
+  },
+  "insights": {
+    "entry_points": [],
+    "complexity_hotspots": [
+      {
+        "id": "demo_fastapi_backend:app/main.py:authenticate_user",
+        "name": "authenticate_user",
+        "type": "function",
+        "path": "app/main.py",
+        "total_connections": 4,
+        "incoming": 2,
+        "outgoing": 2,
+        "reason": "4 total connections (2 in, 2 out)"
+      },
+      {
+        "id": "demo_fastapi_backend:app/main.py:get_user_from_db",
+        "name": "get_user_from_db",
+        "type": "function",
+        "path": "app/main.py",
+        "total_connections": 4,
+        "incoming": 3,
+        "outgoing": 1,
+        "reason": "4 total connections (3 in, 1 out)"
+      },
+      {
+        "id": "demo_fastapi_backend:app/main.py:login",
+        "name": "login",
+        "type": "function",
+        "path": "app/main.py",
+        "total_connections": 3,
+        "incoming": 1,
+        "outgoing": 2,
+        "reason": "3 total connections (1 in, 2 out)"
+      },
+      {
+        "id": "demo_fastapi_backend:app/database.py:get_user",
+        "name": "get_user",
+        "type": "function",
+        "path": "app/database.py",
+        "total_connections": 3,
+        "incoming": 3,
+        "outgoing": 0,
+        "reason": "3 total connections (3 in, 0 out)"
+      },
+      {
+        "id": "demo_fastapi_backend:app/database.py:create_user",
+        "name": "create_user",
+        "type": "function",
+        "path": "app/database.py",
+        "total_connections": 3,
+        "incoming": 1,
+        "outgoing": 2,
+        "reason": "3 total connections (1 in, 2 out)"
+      }
+    ],
+    "architecture_hubs": [
+      {
+        "id": "demo_fastapi_backend:app/main.py:get_user_from_db",
+        "name": "get_user_from_db",
+        "type": "function",
+        "path": "app/main.py",
+        "incoming": 3,
+        "outgoing": 1,
+        "reason": "Central hub: 3 callers, delegates to 1 functions"
+      },
+      {
+        "id": "demo_fastapi_backend:app/main.py:authenticate_user",
+        "name": "authenticate_user",
+        "type": "function",
+        "path": "app/main.py",
+        "incoming": 2,
+        "outgoing": 2,
+        "reason": "Central hub: 2 callers, delegates to 2 functions"
+      }
+    ],
+    "isolated_modules": [
+      {
+        "id": "demo_fastapi_backend:app/models.py:User",
+        "name": "User",
+        "type": "class",
+        "path": "app/models.py",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      },
+      {
+        "id": "demo_fastapi_backend:app/models.py:UserInDB",
+        "name": "UserInDB",
+        "type": "class",
+        "path": "app/models.py",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      },
+      {
+        "id": "demo_fastapi_backend:app/models.py:Token",
+        "name": "Token",
+        "type": "class",
+        "path": "app/models.py",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      },
+      {
+        "id": "demo_fastapi_backend:app/models.py:TokenData",
+        "name": "TokenData",
+        "type": "class",
+        "path": "app/models.py",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      },
+      {
+        "id": "demo_fastapi_backend:app/models.py:UserCreate",
+        "name": "UserCreate",
+        "type": "class",
+        "path": "app/models.py",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      }
+    ]
+  }
+}

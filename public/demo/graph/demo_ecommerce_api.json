@@ -1,0 +1,114 @@
+{
+  "nodes": [
+    {
+      "id": "demo_ecommerce_api:api/products.py",
+      "type": "file",
+      "name": "products.py",
+      "path": "api/products.py",
+      "summary": null,
+      "code": null,
+      "lineCount": 53
+    },
+    {
+      "id": "demo_ecommerce_api:api/products.py:list_products",
+      "type": "function",
+      "name": "list_products",
+      "path": "api/products.py",
+      "summary": "List all products with optional filtering.",
+      "code": "async def list_products(\n    skip: int = Query(0, ge=0),\n    limit: int = Query(10, ge=1, le=100),\n    category: Optional[str] = None,\n    search: Optional[str] = None\n):\n    \"\"\"List all products with optional filtering.\"\"\"\n    products = db.get_products(skip=skip, limit=limit, category=category, search=search)\n    return products",
+      "lineCount": 9
+    },
+    {
+      "id": "demo_ecommerce_api:api/products.py:get_product",
+      "type": "function",
+      "name": "get_product",
+      "path": "api/products.py",
+      "summary": "Get a specific product by ID.",
+      "code": "async def get_product(product_id: str):\n    \"\"\"Get a specific product by ID.\"\"\"\n    product = db.get_product(product_id)\n    if not product:\n        raise HTTPException(status_code=404, detail=\"Product not found\")\n    return product",
+      "lineCount": 6
+    },
+    {
+      "id": "demo_ecommerce_api:api/products.py:create_product",
+      "type": "function",
+      "name": "create_product",
+      "path": "api/products.py",
+      "summary": "Create a new product.",
+      "code": "async def create_product(product: ProductCreate):\n    \"\"\"Create a new product.\"\"\"\n    return db.create_product(product)",
+      "lineCount": 3
+    },
+    {
+      "id": "demo_ecommerce_api:api/products.py:update_product",
+      "type": "function",
+      "name": "update_product",
+      "path": "api/products.py",
+      "summary": "Update an existing product.",
+      "code": "async def update_product(product_id: str, product: ProductUpdate):\n    \"\"\"Update an existing product.\"\"\"\n    updated = db.update_product(product_id, product)\n    if not updated:\n        raise HTTPException(status_code=404, detail=\"Product not found\")\n    return updated",
+      "lineCount": 6
+    },
+    {
+      "id": "demo_ecommerce_api:api/products.py:delete_product",
+      "type": "function",
+      "name": "delete_product",
+      "path": "api/products.py",
+      "summary": "Delete a product.",
+      "code": "async def delete_product(product_id: str):\n    \"\"\"Delete a product.\"\"\"\n    deleted = db.delete_product(product_id)\n    if not deleted:\n        raise HTTPException(status_code=404, detail=\"Product not found\")",
+      "lineCount": 5
+    }
+  ],
+  "edges": [
+    {
+      "id": "demo_ecommerce_api-edge-4",
+      "source": "demo_ecommerce_api:api/products.py",
+      "target": "demo_ecommerce_api:api/products.py:list_products",
+      "type": "defines"
+    },
+    {
+      "id": "demo_ecommerce_api-edge-5",
+      "source": "demo_ecommerce_api:api/products.py",
+      "target": "demo_ecommerce_api:api/products.py:get_product",
+      "type": "defines"
+    },
+    {
+      "id": "demo_ecommerce_api-edge-6",
+      "source": "demo_ecommerce_api:api/products.py",
+      "target": "demo_ecommerce_api:api/products.py:create_product",
+      "type": "defines"
+    },
+    {
+      "id": "demo_ecommerce_api-edge-7",
+      "source": "demo_ecommerce_api:api/products.py",
+      "target": "demo_ecommerce_api:api/products.py:update_product",
+      "type": "defines"
+    },
+    {
+      "id": "demo_ecommerce_api-edge-8",
+      "source": "demo_ecommerce_api:api/products.py",
+      "target": "demo_ecommerce_api:api/products.py:delete_product",
+      "type": "defines"
+    },
+    {
+      "id": "demo_ecommerce_api-edge-10",
+      "source": "demo_ecommerce_api:api/products.py:get_product",
+      "target": "demo_ecommerce_api:api/products.py:get_product",
+      "type": "calls"
+    },
+    {
+      "id": "demo_ecommerce_api-edge-12",
+      "source": "demo_ecommerce_api:api/products.py:create_product",
+      "target": "demo_ecommerce_api:api/products.py:create_product",
+      "type": "calls"
+    },
+    {
+      "id": "demo_ecommerce_api-edge-13",
+      "source": "demo_ecommerce_api:api/products.py:update_product",
+      "target": "demo_ecommerce_api:api/products.py:update_product",
+      "type": "calls"
+    },
+    {
+      "id": "demo_ecommerce_api-edge-15",
+      "source": "demo_ecommerce_api:api/products.py:delete_product",
+      "target": "demo_ecommerce_api:api/products.py:delete_product",
+      "type": "calls"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "id": "demo_fastapi_backend",
+    "name": "FastAPI Auth Service",
+    "description": "A sample authentication microservice built with FastAPI",
+    "language": "Python",
+    "url": "https://github.com/demo/fastapi-auth",
+    "stars": 1234,
+    "status": "complete",
+    "nodeCount": 22,
+    "edgeCount": 29,
+    "fileCount": 3,
+    "isDemo": true
+  },
+  {
+    "id": "demo_react_dashboard",
+    "name": "React Dashboard",
+    "description": "Modern dashboard built with React, TypeScript, and Tailwind CSS",
+    "language": "TypeScript",
+    "url": "https://github.com/demo/react-dashboard",
+    "stars": 2567,
+    "status": "complete",
+    "nodeCount": 13,
+    "edgeCount": 11,
+    "fileCount": 3,
+    "isDemo": true
+  },
+  {
+    "id": "demo_ecommerce_api",
+    "name": "E-commerce API",
+    "description": "RESTful API for an e-commerce platform",
+    "language": "Python",
+    "url": "https://github.com/demo/ecommerce-api",
+    "stars": 890,
+    "status": "complete",
+    "nodeCount": 6,
+    "edgeCount": 9,
+    "fileCount": 1,
+    "isDemo": true
+  }
+]

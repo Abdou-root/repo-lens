@@ -1,0 +1,189 @@
+{
+  "nodes": [
+    {
+      "id": "demo_react_dashboard:src/components/Dashboard.tsx",
+      "type": "file",
+      "name": "Dashboard.tsx",
+      "path": "src/components/Dashboard.tsx",
+      "summary": null,
+      "code": null,
+      "lineCount": 127
+    },
+    {
+      "id": "demo_react_dashboard:src/components/Dashboard.tsx:Dashboard",
+      "type": "class",
+      "name": "Dashboard",
+      "path": "src/components/Dashboard.tsx",
+      "summary": null,
+      "code": "Dashboard: React.FC<DashboardProps> = ({ userId }) => {\n    const [stats, setStats] = useState<UserStats | null>(null);\n    const [loading, setLoading] = useState(true);\n    const [error, setError] = useState<string | null>(null);\n\n    useEffect(() => {\n        loadDashboardData();\n    }, [userId]);\n\n    const loadDashboardData = async () => {\n        try {\n            setLoading(true);\n            setError(null);\n\n            const [statsData, activityData] = await Promise.all([\n                fetchUserStats(userId),\n                fetchRecentActivity(userId)\n            ]);\n\n            setStats(statsData);\n        } catch (err) {\n            setError(err instanceof Error ? err.message : 'Failed to load dashboard');\n        } finally {\n            setLoading(false);\n        }\n    };\n\n    if (loading) {\n        return <LoadingSpinner />;\n    }\n\n    if (error) {\n        return <ErrorMessage message={error} onRetry={loadDashboardData} />;\n    }\n\n    return (\n        <div className=\"da",
+      "lineCount": 69
+    },
+    {
+      "id": "demo_react_dashboard:src/components/Dashboard.tsx:LoadingSpinner",
+      "type": "class",
+      "name": "LoadingSpinner",
+      "path": "src/components/Dashboard.tsx",
+      "summary": null,
+      "code": "LoadingSpinner: React.FC = () => (\n    <div className=\"flex items-center justify-center h-64\">\n        <div className=\"animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600\" />\n    </div>\n)",
+      "lineCount": 5
+    },
+    {
+      "id": "demo_react_dashboard:src/components/Dashboard.tsx:ErrorMessage",
+      "type": "class",
+      "name": "ErrorMessage",
+      "path": "src/components/Dashboard.tsx",
+      "summary": null,
+      "code": "ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onRetry }) => (\n    <div className=\"bg-red-50 border border-red-200 rounded p-4\">\n        <p className=\"text-red-800 mb-2\">{message}</p>\n        <button\n            onClick={onRetry}\n            className=\"bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700\"\n        >\n            Retry\n        </button>\n    </div>\n)",
+      "lineCount": 11
+    },
+    {
+      "id": "demo_react_dashboard:src/components/Dashboard.tsx:StatsCard",
+      "type": "class",
+      "name": "StatsCard",
+      "path": "src/components/Dashboard.tsx",
+      "summary": null,
+      "code": "StatsCard: React.FC<StatsCardProps> = ({ title, value, change }) => {\n    const isPositive = change >= 0;\n\n    return (\n        <Card>\n            <h3 className=\"text-gray-600 text-sm mb-2\">{title}</h3>\n            <p className=\"text-3xl font-bold mb-2\">{value}</p>\n            <span className={`text-sm ${isPositive ? 'text-green-600' : 'text-red-600'}`}>\n                {isPositive ? '↑' : '↓'} {Math.abs(change)}%\n            </span>\n        </Card>\n    );\n};\n",
+      "lineCount": 13
+    },
+    {
+      "id": "demo_react_dashboard:src/components/Dashboard.tsx:loadDashboardData",
+      "type": "function",
+      "name": "loadDashboardData",
+      "path": "src/components/Dashboard.tsx",
+      "summary": null,
+      "code": "async () => {\n        try {\n            setLoading(true);\n            setError(null);\n\n            const [statsData, activityData] = await Promise.all([\n                fetchUserStats(userId),\n                fetchRecentActivity(userId)\n            ]);\n\n            setStats(statsData);\n        } catch (err) {\n            setError(err instanceof Error ? err.message : 'Failed to load dashboard');\n        } finally {\n            setLoading(false);\n        }\n    }",
+      "lineCount": 17
+    },
+    {
+      "id": "demo_react_dashboard:src/api/dashboard.ts",
+      "type": "file",
+      "name": "dashboard.ts",
+      "path": "src/api/dashboard.ts",
+      "summary": null,
+      "code": null,
+      "lineCount": 36
+    },
+    {
+      "id": "demo_react_dashboard:src/api/dashboard.ts:fetchUserStats",
+      "type": "function",
+      "name": "fetchUserStats",
+      "path": "src/api/dashboard.ts",
+      "summary": null,
+      "code": "async function fetchUserStats(userId: string): Promise<UserStats> {\n    try {\n        const response = await axios.get(`${API_BASE_URL}/api/stats/user/${userId}`);\n        return response.data;\n    } catch (error) {\n        console.error('Failed to fetch user stats:', error);\n        throw new Error('Unable to load user statistics');\n    }\n}",
+      "lineCount": 9
+    },
+    {
+      "id": "demo_react_dashboard:src/api/dashboard.ts:fetchRecentActivity",
+      "type": "function",
+      "name": "fetchRecentActivity",
+      "path": "src/api/dashboard.ts",
+      "summary": null,
+      "code": "async function fetchRecentActivity(userId: string): Promise<Activity[]> {\n    try {\n        const response = await axios.get(`${API_BASE_URL}/api/activity/${userId}`);\n        return response.data;\n    } catch (error) {\n        console.error('Failed to fetch recent activity:', error);\n        throw new Error('Unable to load recent activity');\n    }\n}",
+      "lineCount": 9
+    },
+    {
+      "id": "demo_react_dashboard:src/api/dashboard.ts:updateUserPreferences",
+      "type": "function",
+      "name": "updateUserPreferences",
+      "path": "src/api/dashboard.ts",
+      "summary": null,
+      "code": "async function updateUserPreferences(\n    userId: string,\n    preferences: Record<string, any>\n): Promise<void> {\n    await axios.put(`${API_BASE_URL}/api/users/${userId}/preferences`, preferences);\n}",
+      "lineCount": 6
+    },
+    {
+      "id": "demo_react_dashboard:src/hooks/useAuth.ts",
+      "type": "file",
+      "name": "useAuth.ts",
+      "path": "src/hooks/useAuth.ts",
+      "summary": null,
+      "code": null,
+      "lineCount": 82
+    },
+    {
+      "id": "demo_react_dashboard:src/hooks/useAuth.ts:useAuth",
+      "type": "function",
+      "name": "useAuth",
+      "path": "src/hooks/useAuth.ts",
+      "summary": null,
+      "code": "function useAuth(): UseAuthResult {\n    const [user, setUser] = useState<User | null>(null);\n    const [loading, setLoading] = useState(true);\n    const [error, setError] = useState<string | null>(null);\n\n    useEffect(() => {\n        checkAuthStatus();\n    }, []);\n\n    const checkAuthStatus = async () => {\n        try {\n            const token = localStorage.getItem('auth_token');\n            if (!token) {\n                setLoading(false);\n                return;\n            }\n\n            const response = await axios.get('/api/users/me', {\n                headers: { Authorization: `Bearer ${token}` }\n            });\n\n            setUser(response.data);\n        } catch (err) {\n            localStorage.removeItem('auth_token');\n            setError('Session expired');\n        } finally {\n            setLoading(false);\n        }\n    };\n\n    const login = useCallback(async (username: string, password: string) => {\n        try {\n            setLoading(true);\n            setError(null);\n\n",
+      "lineCount": 64
+    },
+    {
+      "id": "demo_react_dashboard:src/hooks/useAuth.ts:checkAuthStatus",
+      "type": "function",
+      "name": "checkAuthStatus",
+      "path": "src/hooks/useAuth.ts",
+      "summary": null,
+      "code": "async () => {\n        try {\n            const token = localStorage.getItem('auth_token');\n            if (!token) {\n                setLoading(false);\n                return;\n            }\n\n            const response = await axios.get('/api/users/me', {\n                headers: { Authorization: `Bearer ${token}` }\n            });\n\n            setUser(response.data);\n        } catch (err) {\n            localStorage.removeItem('auth_token');\n            setError('Session expired');\n        } finally {\n            setLoading(false);\n        }\n    }",
+      "lineCount": 20
+    }
+  ],
+  "edges": [
+    {
+      "id": "demo_react_dashboard-edge-4",
+      "source": "demo_react_dashboard:src/components/Dashboard.tsx",
+      "target": "demo_react_dashboard:src/api/dashboard.ts",
+      "type": "imports"
+    },
+    {
+      "id": "demo_react_dashboard-edge-5",
+      "source": "demo_react_dashboard:src/components/Dashboard.tsx",
+      "target": "demo_react_dashboard:src/components/Dashboard.tsx:Dashboard",
+      "type": "defines"
+    },
+    {
+      "id": "demo_react_dashboard-edge-6",
+      "source": "demo_react_dashboard:src/components/Dashboard.tsx",
+      "target": "demo_react_dashboard:src/components/Dashboard.tsx:LoadingSpinner",
+      "type": "defines"
+    },
+    {
+      "id": "demo_react_dashboard-edge-7",
+      "source": "demo_react_dashboard:src/components/Dashboard.tsx",
+      "target": "demo_react_dashboard:src/components/Dashboard.tsx:ErrorMessage",
+      "type": "defines"
+    },
+    {
+      "id": "demo_react_dashboard-edge-8",
+      "source": "demo_react_dashboard:src/components/Dashboard.tsx",
+      "target": "demo_react_dashboard:src/components/Dashboard.tsx:StatsCard",
+      "type": "defines"
+    },
+    {
+      "id": "demo_react_dashboard-edge-9",
+      "source": "demo_react_dashboard:src/components/Dashboard.tsx",
+      "target": "demo_react_dashboard:src/components/Dashboard.tsx:loadDashboardData",
+      "type": "defines"
+    },
+    {
+      "id": "demo_react_dashboard-edge-16",
+      "source": "demo_react_dashboard:src/api/dashboard.ts",
+      "target": "demo_react_dashboard:src/api/dashboard.ts:fetchUserStats",
+      "type": "defines"
+    },
+    {
+      "id": "demo_react_dashboard-edge-17",
+      "source": "demo_react_dashboard:src/api/dashboard.ts",
+      "target": "demo_react_dashboard:src/api/dashboard.ts:fetchRecentActivity",
+      "type": "defines"
+    },
+    {
+      "id": "demo_react_dashboard-edge-18",
+      "source": "demo_react_dashboard:src/api/dashboard.ts",
+      "target": "demo_react_dashboard:src/api/dashboard.ts:updateUserPreferences",
+      "type": "defines"
+    },
+    {
+      "id": "demo_react_dashboard-edge-27",
+      "source": "demo_react_dashboard:src/hooks/useAuth.ts",
+      "target": "demo_react_dashboard:src/hooks/useAuth.ts:useAuth",
+      "type": "defines"
+    },
+    {
+      "id": "demo_react_dashboard-edge-28",
+      "source": "demo_react_dashboard:src/hooks/useAuth.ts",
+      "target": "demo_react_dashboard:src/hooks/useAuth.ts:checkAuthStatus",
+      "type": "defines"
+    }
+  ]
+}

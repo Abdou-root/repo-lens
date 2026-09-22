@@ -1,0 +1,48 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+.env
+.env.production
+
+/.claude
+/.pytest_cache
+
+# Python bytecode/cache
+__pycache__/
+*.py[cod]
+
+# Runtime cache dir (populated by embeddings/search cache at runtime)
+/cache/
+
+# Windows artifact (stray file created by a `> nul` redirect in a script)
+nul
+
+# Generated/local notes, not meant for the repo
+repolens_summary.md
+
+# Internal deployment notes: documents live security blockers (e.g. disabled
+# SSL verification) and messy in-progress checklists, not for public repo.
+# DEPLOYMENT_FREE_TIER.md is the generic public-facing guide, kept tracked.
+PRODUCTION_DEPLOYMENT.md

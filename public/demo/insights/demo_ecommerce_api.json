@@ -1,0 +1,102 @@
+{
+  "repo_id": "demo_ecommerce_api",
+  "summary": {
+    "total_nodes": 6,
+    "code_nodes": 5,
+    "total_edges": 9,
+    "avg_connections": 3.6
+  },
+  "insights": {
+    "entry_points": [],
+    "complexity_hotspots": [
+      {
+        "id": "demo_ecommerce_api:api/products.py:get_product",
+        "name": "get_product",
+        "type": "function",
+        "path": "api/products.py",
+        "total_connections": 3,
+        "incoming": 2,
+        "outgoing": 1,
+        "reason": "3 total connections (2 in, 1 out)"
+      },
+      {
+        "id": "demo_ecommerce_api:api/products.py:create_product",
+        "name": "create_product",
+        "type": "function",
+        "path": "api/products.py",
+        "total_connections": 3,
+        "incoming": 2,
+        "outgoing": 1,
+        "reason": "3 total connections (2 in, 1 out)"
+      },
+      {
+        "id": "demo_ecommerce_api:api/products.py:update_product",
+        "name": "update_product",
+        "type": "function",
+        "path": "api/products.py",
+        "total_connections": 3,
+        "incoming": 2,
+        "outgoing": 1,
+        "reason": "3 total connections (2 in, 1 out)"
+      },
+      {
+        "id": "demo_ecommerce_api:api/products.py:delete_product",
+        "name": "delete_product",
+        "type": "function",
+        "path": "api/products.py",
+        "total_connections": 3,
+        "incoming": 2,
+        "outgoing": 1,
+        "reason": "3 total connections (2 in, 1 out)"
+      }
+    ],
+    "architecture_hubs": [
+      {
+        "id": "demo_ecommerce_api:api/products.py:get_product",
+        "name": "get_product",
+        "type": "function",
+        "path": "api/products.py",
+        "incoming": 2,
+        "outgoing": 1,
+        "reason": "Central hub: 2 callers, delegates to 1 functions"
+      },
+      {
+        "id": "demo_ecommerce_api:api/products.py:create_product",
+        "name": "create_product",
+        "type": "function",
+        "path": "api/products.py",
+        "incoming": 2,
+        "outgoing": 1,
+        "reason": "Central hub: 2 callers, delegates to 1 functions"
+      },
+      {
+        "id": "demo_ecommerce_api:api/products.py:update_product",
+        "name": "update_product",
+        "type": "function",
+        "path": "api/products.py",
+        "incoming": 2,
+        "outgoing": 1,
+        "reason": "Central hub: 2 callers, delegates to 1 functions"
+      },
+      {
+        "id": "demo_ecommerce_api:api/products.py:delete_product",
+        "name": "delete_product",
+        "type": "function",
+        "path": "api/products.py",
+        "incoming": 2,
+        "outgoing": 1,
+        "reason": "Central hub: 2 callers, delegates to 1 functions"
+      }
+    ],
+    "isolated_modules": [
+      {
+        "id": "demo_ecommerce_api:api/products.py:list_products",
+        "name": "list_products",
+        "type": "function",
+        "path": "api/products.py",
+        "connections": 1,
+        "reason": "Weakly connected, may be leaf or isolated utility"
+      }
+    ]
+  }
+}

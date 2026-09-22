@@ -1,0 +1,378 @@
+{
+  "nodes": [
+    {
+      "id": "demo_fastapi_backend:app/main.py",
+      "type": "file",
+      "name": "main.py",
+      "path": "app/main.py",
+      "summary": null,
+      "code": null,
+      "lineCount": 111
+    },
+    {
+      "id": "demo_fastapi_backend:app/main.py:verify_password",
+      "type": "function",
+      "name": "verify_password",
+      "path": "app/main.py",
+      "summary": "Verify a password against its hash.",
+      "code": "def verify_password(plain_password: str, hashed_password: str) -> bool:\n    \"\"\"Verify a password against its hash.\"\"\"\n    return pwd_context.verify(plain_password, hashed_password)",
+      "lineCount": 3
+    },
+    {
+      "id": "demo_fastapi_backend:app/main.py:get_password_hash",
+      "type": "function",
+      "name": "get_password_hash",
+      "path": "app/main.py",
+      "summary": "Hash a password for storage.",
+      "code": "def get_password_hash(password: str) -> str:\n    \"\"\"Hash a password for storage.\"\"\"\n    return pwd_context.hash(password)",
+      "lineCount": 3
+    },
+    {
+      "id": "demo_fastapi_backend:app/main.py:create_access_token",
+      "type": "function",
+      "name": "create_access_token",
+      "path": "app/main.py",
+      "summary": "Create a JWT access token.",
+      "code": "def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:\n    \"\"\"Create a JWT access token.\"\"\"\n    to_encode = data.copy()\n    if expires_delta:\n        expire = datetime.utcnow() + expires_delta\n    else:\n        expire = datetime.utcnow() + timedelta(minutes=15)\n\n    to_encode.update({\"exp\": expire})\n    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)\n    return encoded_jwt",
+      "lineCount": 11
+    },
+    {
+      "id": "demo_fastapi_backend:app/main.py:authenticate_user",
+      "type": "function",
+      "name": "authenticate_user",
+      "path": "app/main.py",
+      "summary": "Authenticate a user with username and password.",
+      "code": "def authenticate_user(username: str, password: str) -> Optional[dict]:\n    \"\"\"Authenticate a user with username and password.\"\"\"\n    # In production, fetch from database\n    user = get_user_from_db(username)\n    if not user:\n        return None\n    if not verify_password(password, user[\"hashed_password\"]):\n        return None\n    return user",
+      "lineCount": 9
+    },
+    {
+      "id": "demo_fastapi_backend:app/main.py:login",
+      "type": "function",
+      "name": "login",
+      "path": "app/main.py",
+      "summary": "Login endpoint - returns JWT token.",
+      "code": "async def login(form_data: OAuth2PasswordRequestForm = Depends()):\n    \"\"\"Login endpoint - returns JWT token.\"\"\"\n    user = authenticate_user(form_data.username, form_data.password)\n    if not user:\n        raise HTTPException(\n            status_code=status.HTTP_401_UNAUTHORIZED,\n            detail=\"Incorrect username or password\",\n            headers={\"WWW-Authenticate\": \"Bearer\"},\n        )\n\n    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)\n    access_token = create_access_token(\n        data={\"sub\": user[\"username\"]}, expires_delta=access_token_expires\n    )\n\n    return {\"access_token\": access_token, \"token_type\": \"bearer\"}",
+      "lineCount": 16
+    },
+    {
+      "id": "demo_fastapi_backend:app/main.py:read_users_me",
+      "type": "function",
+      "name": "read_users_me",
+      "path": "app/main.py",
+      "summary": "Get current user from token.",
+      "code": "async def read_users_me(token: str = Depends(oauth2_scheme)):\n    \"\"\"Get current user from token.\"\"\"\n    credentials_exception = HTTPException(\n        status_code=status.HTTP_401_UNAUTHORIZED,\n        detail=\"Could not validate credentials\",\n        headers={\"WWW-Authenticate\": \"Bearer\"},\n    )\n\n    try:\n        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])\n        username: str = payload.get(\"sub\")\n        if username is None:\n            raise credentials_exception\n    except JWTError:\n        raise credentials_exception\n\n    user = get_user_from_db(username)\n    if user is None:\n        raise credentials_exception\n\n    return user",
+      "lineCount": 21
+    },
+    {
+      "id": "demo_fastapi_backend:app/main.py:get_user_from_db",
+      "type": "function",
+      "name": "get_user_from_db",
+      "path": "app/main.py",
+      "summary": "Fetch user from database.",
+      "code": "def get_user_from_db(username: str) -> Optional[dict]:\n    \"\"\"Fetch user from database.\"\"\"\n    # Simulated database lookup\n    if username == \"demo\":\n        return {\n            \"username\": \"demo\",\n            \"email\": \"demo@example.com\",\n            \"hashed_password\": get_password_hash(\"demo123\"),\n            \"is_active\": True\n        }\n    return None",
+      "lineCount": 11
+    },
+    {
+      "id": "demo_fastapi_backend:app/models.py",
+      "type": "file",
+      "name": "models.py",
+      "path": "app/models.py",
+      "summary": null,
+      "code": null,
+      "lineCount": 48
+    },
+    {
+      "id": "demo_fastapi_backend:app/models.py:User",
+      "type": "class",
+      "name": "User",
+      "path": "app/models.py",
+      "summary": "User model.",
+      "code": "class User(BaseModel):\n    \"\"\"User model.\"\"\"\n    username: str = Field(..., min_length=3, max_length=50)\n    email: EmailStr\n    full_name: Optional[str] = None\n    is_active: bool = True\n    created_at: datetime = Field(default_factory=datetime.utcnow)",
+      "lineCount": 7
+    },
+    {
+      "id": "demo_fastapi_backend:app/models.py:UserInDB",
+      "type": "class",
+      "name": "UserInDB",
+      "path": "app/models.py",
+      "summary": "User model with password hash.",
+      "code": "class UserInDB(User):\n    \"\"\"User model with password hash.\"\"\"\n    hashed_password: str",
+      "lineCount": 3
+    },
+    {
+      "id": "demo_fastapi_backend:app/models.py:Token",
+      "type": "class",
+      "name": "Token",
+      "path": "app/models.py",
+      "summary": "JWT token response.",
+      "code": "class Token(BaseModel):\n    \"\"\"JWT token response.\"\"\"\n    access_token: str\n    token_type: str = \"bearer\"",
+      "lineCount": 4
+    },
+    {
+      "id": "demo_fastapi_backend:app/models.py:TokenData",
+      "type": "class",
+      "name": "TokenData",
+      "path": "app/models.py",
+      "summary": "Data extracted from token.",
+      "code": "class TokenData(BaseModel):\n    \"\"\"Data extracted from token.\"\"\"\n    username: Optional[str] = None",
+      "lineCount": 3
+    },
+    {
+      "id": "demo_fastapi_backend:app/models.py:UserCreate",
+      "type": "class",
+      "name": "UserCreate",
+      "path": "app/models.py",
+      "summary": "User creation request.",
+      "code": "class UserCreate(BaseModel):\n    \"\"\"User creation request.\"\"\"\n    username: str = Field(..., min_length=3, max_length=50)\n    email: EmailStr\n    password: str = Field(..., min_length=8)\n    full_name: Optional[str] = None",
+      "lineCount": 6
+    },
+    {
+      "id": "demo_fastapi_backend:app/models.py:UserResponse",
+      "type": "class",
+      "name": "UserResponse",
+      "path": "app/models.py",
+      "summary": "User response (without password).",
+      "code": "class UserResponse(BaseModel):\n    \"\"\"User response (without password).\"\"\"\n    username: str\n    email: str\n    full_name: Optional[str]\n    is_active: bool\n    created_at: datetime",
+      "lineCount": 7
+    },
+    {
+      "id": "demo_fastapi_backend:app/database.py",
+      "type": "file",
+      "name": "database.py",
+      "path": "app/database.py",
+      "summary": null,
+      "code": null,
+      "lineCount": 72
+    },
+    {
+      "id": "demo_fastapi_backend:app/database.py:get_user",
+      "type": "function",
+      "name": "get_user",
+      "path": "app/database.py",
+      "summary": "Retrieve a user by username.",
+      "code": "def get_user(username: str) -> Optional[UserInDB]:\n    \"\"\"Retrieve a user by username.\"\"\"\n    return USERS_DB.get(username)",
+      "lineCount": 3
+    },
+    {
+      "id": "demo_fastapi_backend:app/database.py:get_user_by_email",
+      "type": "function",
+      "name": "get_user_by_email",
+      "path": "app/database.py",
+      "summary": "Retrieve a user by email.",
+      "code": "def get_user_by_email(email: str) -> Optional[UserInDB]:\n    \"\"\"Retrieve a user by email.\"\"\"\n    for user in USERS_DB.values():\n        if user.email == email:\n            return user\n    return None",
+      "lineCount": 6
+    },
+    {
+      "id": "demo_fastapi_backend:app/database.py:create_user",
+      "type": "function",
+      "name": "create_user",
+      "path": "app/database.py",
+      "summary": "Create a new user.",
+      "code": "def create_user(user_data: UserCreate) -> UserInDB:\n    \"\"\"Create a new user.\"\"\"\n    if get_user(user_data.username):\n        raise ValueError(\"Username already exists\")\n\n    if get_user_by_email(user_data.email):\n        raise ValueError(\"Email already registered\")\n\n    hashed_password = pwd_context.hash(user_data.password)\n\n    user = UserInDB(\n        username=user_data.username,\n        email=user_data.email,\n        full_name=user_data.full_name,\n        hashed_password=hashed_password\n    )\n\n    USERS_DB[user.username] = user\n    return user",
+      "lineCount": 19
+    },
+    {
+      "id": "demo_fastapi_backend:app/database.py:update_user",
+      "type": "function",
+      "name": "update_user",
+      "path": "app/database.py",
+      "summary": "Update user information.",
+      "code": "def update_user(username: str, updates: dict) -> Optional[UserInDB]:\n    \"\"\"Update user information.\"\"\"\n    user = get_user(username)\n    if not user:\n        return None\n\n    for key, value in updates.items():\n        if hasattr(user, key) and key != \"hashed_password\":\n            setattr(user, key, value)\n\n    return user",
+      "lineCount": 11
+    },
+    {
+      "id": "demo_fastapi_backend:app/database.py:delete_user",
+      "type": "function",
+      "name": "delete_user",
+      "path": "app/database.py",
+      "summary": "Delete a user.",
+      "code": "def delete_user(username: str) -> bool:\n    \"\"\"Delete a user.\"\"\"\n    if username in USERS_DB:\n        del USERS_DB[username]\n        return True\n    return False",
+      "lineCount": 6
+    },
+    {
+      "id": "demo_fastapi_backend:app/database.py:list_users",
+      "type": "function",
+      "name": "list_users",
+      "path": "app/database.py",
+      "summary": "List all users with pagination.",
+      "code": "def list_users(skip: int = 0, limit: int = 100) -> List[UserInDB]:\n    \"\"\"List all users with pagination.\"\"\"\n    users = list(USERS_DB.values())\n    return users[skip : skip + limit]",
+      "lineCount": 4
+    }
+  ],
+  "edges": [
+    {
+      "id": "demo_fastapi_backend-edge-6",
+      "source": "demo_fastapi_backend:app/main.py",
+      "target": "demo_fastapi_backend:app/main.py:verify_password",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-7",
+      "source": "demo_fastapi_backend:app/main.py",
+      "target": "demo_fastapi_backend:app/main.py:get_password_hash",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-8",
+      "source": "demo_fastapi_backend:app/main.py",
+      "target": "demo_fastapi_backend:app/main.py:create_access_token",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-9",
+      "source": "demo_fastapi_backend:app/main.py",
+      "target": "demo_fastapi_backend:app/main.py:authenticate_user",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-10",
+      "source": "demo_fastapi_backend:app/main.py",
+      "target": "demo_fastapi_backend:app/main.py:login",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-11",
+      "source": "demo_fastapi_backend:app/main.py",
+      "target": "demo_fastapi_backend:app/main.py:read_users_me",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-12",
+      "source": "demo_fastapi_backend:app/main.py",
+      "target": "demo_fastapi_backend:app/main.py:get_user_from_db",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-21",
+      "source": "demo_fastapi_backend:app/main.py:authenticate_user",
+      "target": "demo_fastapi_backend:app/main.py:get_user_from_db",
+      "type": "calls"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-22",
+      "source": "demo_fastapi_backend:app/main.py:authenticate_user",
+      "target": "demo_fastapi_backend:app/main.py:verify_password",
+      "type": "calls"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-23",
+      "source": "demo_fastapi_backend:app/main.py:login",
+      "target": "demo_fastapi_backend:app/main.py:authenticate_user",
+      "type": "calls"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-26",
+      "source": "demo_fastapi_backend:app/main.py:login",
+      "target": "demo_fastapi_backend:app/main.py:create_access_token",
+      "type": "calls"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-30",
+      "source": "demo_fastapi_backend:app/main.py:read_users_me",
+      "target": "demo_fastapi_backend:app/main.py:get_user_from_db",
+      "type": "calls"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-31",
+      "source": "demo_fastapi_backend:app/main.py:get_user_from_db",
+      "target": "demo_fastapi_backend:app/main.py:get_password_hash",
+      "type": "calls"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-35",
+      "source": "demo_fastapi_backend:app/models.py",
+      "target": "demo_fastapi_backend:app/models.py:User",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-36",
+      "source": "demo_fastapi_backend:app/models.py",
+      "target": "demo_fastapi_backend:app/models.py:UserInDB",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-37",
+      "source": "demo_fastapi_backend:app/models.py",
+      "target": "demo_fastapi_backend:app/models.py:Token",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-38",
+      "source": "demo_fastapi_backend:app/models.py",
+      "target": "demo_fastapi_backend:app/models.py:TokenData",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-39",
+      "source": "demo_fastapi_backend:app/models.py",
+      "target": "demo_fastapi_backend:app/models.py:UserCreate",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-40",
+      "source": "demo_fastapi_backend:app/models.py",
+      "target": "demo_fastapi_backend:app/models.py:UserResponse",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-48",
+      "source": "demo_fastapi_backend:app/database.py",
+      "target": "demo_fastapi_backend:app/models.py",
+      "type": "imports"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-50",
+      "source": "demo_fastapi_backend:app/database.py",
+      "target": "demo_fastapi_backend:app/database.py:get_user",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-51",
+      "source": "demo_fastapi_backend:app/database.py",
+      "target": "demo_fastapi_backend:app/database.py:get_user_by_email",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-52",
+      "source": "demo_fastapi_backend:app/database.py",
+      "target": "demo_fastapi_backend:app/database.py:create_user",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-53",
+      "source": "demo_fastapi_backend:app/database.py",
+      "target": "demo_fastapi_backend:app/database.py:update_user",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-54",
+      "source": "demo_fastapi_backend:app/database.py",
+      "target": "demo_fastapi_backend:app/database.py:delete_user",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-55",
+      "source": "demo_fastapi_backend:app/database.py",
+      "target": "demo_fastapi_backend:app/database.py:list_users",
+      "type": "defines"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-58",
+      "source": "demo_fastapi_backend:app/database.py:create_user",
+      "target": "demo_fastapi_backend:app/database.py:get_user",
+      "type": "calls"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-60",
+      "source": "demo_fastapi_backend:app/database.py:create_user",
+      "target": "demo_fastapi_backend:app/database.py:get_user_by_email",
+      "type": "calls"
+    },
+    {
+      "id": "demo_fastapi_backend-edge-64",
+      "source": "demo_fastapi_backend:app/database.py:update_user",
+      "target": "demo_fastapi_backend:app/database.py:get_user",
+      "type": "calls"
+    }
+  ]
+}
